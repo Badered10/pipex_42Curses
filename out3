@@ -1,0 +1,5 @@
+  PID TTY           TIME CMD
+ 4886 ttys000    0:00.59 -zsh
+ 5068 ttys001    0:02.15 -zsh
+72191 ttys001    0:00.07 ./a.out pipex.c ps  out3
+17747 ttys004    0:00.39 -zsh

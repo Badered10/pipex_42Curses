@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:45:53 by baouragh          #+#    #+#             */
-/*   Updated: 2024/01/20 23:29:03 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/01/21 18:48:18 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,6 @@ static char *check_path(char *path , char *cmd)
 
         a_path = (ft_strjoin(path,"/"));
             fullpath = ft_strjoin( a_path ,cmd);
-            // if (!fullpath)
-            // {
-            //     free(a_path);
-            //     ft_putstr_fd("pipex: permission denied:\n",2);
-            //     exit(1);
-            // }
           if (!access(fullpath, X_OK))
                 return (free (a_path),fullpath);
             else
@@ -75,12 +69,15 @@ static void show_err(char *argv)
 {
     char *err;
     char *display;
-    
-    err = ft_strjoin("pipex: command not found: ",argv);
+    char **cmd;
+
+    cmd = ft_split(argv,' ');
+    err = ft_strjoin("pipex: command not found: ",*cmd);
         display = ft_strjoin(err,"\n");
         write(2,display,ft_strlen(display));
         free(err);
         free(display);
+        free_double(cmd);
 }
 static char* cmd_path(char **argv,char **env)
 {
@@ -107,7 +104,6 @@ static char* cmd_path(char **argv,char **env)
             if (fullpath)
                 return (fullpath);
         }
-        
         show_err(*argv);
         exit(1);
 }
@@ -116,19 +112,25 @@ void child(char *infile ,char **argv_copy ,char **env,int *pipefd)
     char **cmd;
     char *founded_path;
     int infile_fd;
+    char *cat[2];
 
+    cat[0] = "cat";
+    cat[1] = NULL;
     infile_fd = open(infile, O_RDONLY);
     if (infile_fd < 0)
     {
-        ft_putstr_fd(strerror(errno),2);
+        ft_putstr_fd("pipex: no such file or directory: ",2);
+        ft_putstr_fd(infile,2);
+        write(2,"\n",1);
         exit(1);
     }
     cmd = ft_split(*argv_copy , ' ');
     founded_path = cmd_path(argv_copy, env);
-    // printf("in child ------------> founded_path : |%s| ,cmd : |%s|\n",founded_path,*cmd);
     close(pipefd[0]);
     dup2(infile_fd,0);
     dup2(pipefd[1], 1);
+    if(*(*argv_copy) == '\0')
+         execve(cmd_path(cat, env),cat,NULL);
     execve(founded_path,cmd,NULL);
     close(pipefd[1]);
 }
@@ -137,29 +139,24 @@ void parent(char *outfile,char **argv_copy ,char **env,int *pipefd)
     char **cmd;
     char *founded_path;
     int outfile_fd;
-    char **cat;
+    char *cat[2];
     
-    cat = malloc(2 * sizeof(char *));
     cat[0] = "cat";
     cat[1] = NULL;
     outfile_fd = open(outfile, O_WRONLY | O_TRUNC | O_CREAT, 0644);
     if (outfile_fd < 0)
     {
-        ft_putstr_fd(strerror(errno),2);
+        ft_putstr_fd("pipex: permission denied: ",2);
+        ft_putstr_fd(outfile,2);
+        write(2,"\n",1);
         exit(1);
     }
-    wait(NULL);
     argv_copy++;
     founded_path = cmd_path(argv_copy, env);
     cmd = ft_split(*argv_copy , ' ');
-    printf("in parent ------------> founded_path : |%s| ,cmd : |%s| , argv_copy : |%s|\n",founded_path,*cmd ,*argv_copy);
     close(pipefd[1]);
     dup2(outfile_fd,1);
     dup2(pipefd[0], 0);
-    //  while(1)
-    // ;
-    //   if (*founded_path == '\0')
-    //     execve(cmd_path(cat,env),ft_split("cat", ' '),NULL);
     if(*(*argv_copy) == '\0')
          execve(cmd_path(cat, env),cat,NULL);
     execve(founded_path,cmd,NULL);
@@ -186,3 +183,10 @@ int main (int argc , char **argv, char **env )  // ./pipex inputfile1 cmd1 cmd2 
         else
             parent(argv[4],argv_copy ,env, pipefd);
 }
+
+            // if (!fullpath)
+            // {
+            //     free(a_path);
+            //     ft_putstr_fd("pipex: permission denied:\n",2);
+            //     exit(1);
+            // }

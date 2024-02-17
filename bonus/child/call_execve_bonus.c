@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:14:07 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:10:01 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/17 15:03:20 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	call_execev(char **env, char *argv)
 	check_split(cmd, argv);
 	founded_path = get_fullpath(argv, env);
 	if (!founded_path)
+	{
+		free_double(cmd);
 		exit(EXIT_FAILURE);
+	}
 	cat[0] = "cat";
 	cat[1] = NULL;
 	if (*argv == '\0')
@@ -33,6 +36,7 @@ void	call_execev(char **env, char *argv)
 	}
 	else
 		execve(founded_path, cmd, env);
+	perror("execve");
 	exit(EXIT_FAILURE);
 }
 

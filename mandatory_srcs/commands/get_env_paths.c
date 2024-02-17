@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:03:04 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/15 16:55:37 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/17 14:56:34 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	**get_env_paths(char **env)
 {
 	char	**res;
 
+	if (!env)
+		return (NULL);
 	while (*env && !ft_strnstr(*env, "PATH", 5))
 		env++;
 	if (!*env)

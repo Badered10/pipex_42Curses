@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 09:24:48 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/15 16:41:59 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:35:36 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../headers/libft.h"
 # include <errno.h>
+# include <string.h>
 # include <limits.h>
 # include <sys/types.h>
 # include <sys/wait.h>

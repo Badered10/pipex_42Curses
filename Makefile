@@ -6,14 +6,14 @@
 #    By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 15:58:29 by baouragh          #+#    #+#              #
-#    Updated: 2024/02/15 12:24:26 by baouragh         ###   ########.fr        #
+#    Updated: 2024/02/17 14:19:23 by baouragh         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
-
+CFLAGS = -Wall -Wextra -Werror 
+#-fsanitize=address -g3
 MAKE = make -C libft
 
 MANDOTORY = mandatory_srcs/commands/add_slash_cmd.c mandatory_srcs/commands/check_cmds.c mandatory_srcs/commands/get_command.c \
@@ -34,6 +34,7 @@ BONUS = bonus/commands/add_slash_cmd_bonus.c bonus/commands/check_cmds_bonus.c b
 		bonus/child/open_pipe_bonus.c bonus/here_doc/here_doc_bonus.c bonus/here_doc/open_fds_doc_bonus.c bonus/return_values/check_out_fd_bonus.c \
 		bonus/return_values/last_outfile_check_bonus.c bonus/return_values/return_value_bonus.c \
 		bonus/return_values/check_last_cmd_bonus.c bonus/pipex_bonus.c
+
 
 OBJS_M = $(MANDOTORY:.c=.o)
 OBJS_B = $(BONUS:.c=.o)

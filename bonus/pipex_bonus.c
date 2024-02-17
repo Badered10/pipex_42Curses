@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:45:53 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:09:43 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/17 15:02:48 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ int	main(int argc, char **argv, char **env)
 		here_doc(&fd, argv, &i, &cmds);
 	fd = open_fds(argc, argv, env, doc);
 	skip_first(&fd, &i, &cmds);
-	fd.i_place = i;
 	cmd_mod_check(fd, argc, argv, env);
 	i += 2;
 	while (cmds--)
 		child(fd, argv[i++], env, 0);
 	child(fd, argv[i], env, 1);
-	while (waitpid(-1, NULL, 0) != -1)
+	while (!waitpid(-1, NULL, 0))
 		;
 	return (return_value(fd, argc, argv, env));
 }
@@ -62,11 +61,16 @@ int	main(int argc, char **argv, char **env)
 	as input to the pipe; otherways if fd false open a tmp file to
 	pass its empty content to hundle such cases like command cat taht
 	need input or will hang.
-	in here_doc case open fd for a hidden file to write in it 
-	the input that user write in stdin, and open outfile file
 	
-	2.1 ---> re open the hidden file to get a new file pointer 
-	the offset of it will be 0 to past it as input to the first cmd 
+	2.0 --->in here_doc case open fd for a hidden file to write in it 
+	the input that user write in stdin, and open outfile file.
+	
+	2.1 ---> in heredoc case also re open the hidden file to get a new file
+	pointer the offset of it will be 0 to past it as input to the first cmd.
+	
+	2.2 ---> if fisrt cmd not valid skip it by increment index i by one and 
+	deincrement the cmds by one and set structer index to be equal to
+	current i.
 	
 	3 ---> check cmds if they are right depending of mods cases,
 	print in stderr error if command not found and continue the process

@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:06:37 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/15 16:54:02 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/17 15:03:40 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,19 @@ void	check_cmds(t_fd fd, int argc, char **argv, char **env)
 {
 	int		cmds;
 	char	*cmd;
-	int		mod;
+	int		doc_mod;
 	int		i;
 
-	mod = fd.i_place;
+	doc_mod = fd.i_place;
 	i = fd.check_sum;
 	cmds = argc - 4;
-	check_sum_cases(&i, &cmds, mod);
+	check_sum_cases(&i, &cmds, doc_mod);
 	while (cmds--)
 	{
 		cmd = get_fullpath(argv[i], env);
-		if (*argv[i] != '\0' && access(cmd, F_OK))
+		if (access(cmd, F_OK))
 			print_err("pipex: command not found: ", argv[i]);
-		else if (*argv[i] != '\0' && access(cmd, X_OK))
+		else if (access(cmd, X_OK))
 			print_err("pipex: permission denied: ", argv[i]);
 		free(cmd);
 		i++;

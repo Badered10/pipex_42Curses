@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:06:37 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:02:34 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/17 14:54:29 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 	 	(first and last).
 */
 
-static void	check_sum_cases(int *index, int *cmds, int mod)
+static void	check_sum_cases(int *index, int *cmds)
 {
 	if (*index == CHECK_ALL)
 	{
@@ -48,21 +48,17 @@ static void	check_sum_cases(int *index, int *cmds, int mod)
 		(*index) = 3;
 		(*cmds)--;
 	}
-	if (mod)
-		(*index)++;
 }
 
 void	check_cmds(t_fd fd, int argc, char **argv, char **env)
 {
 	int		cmds;
 	char	*cmd;
-	int		mod;
 	int		i;
 
-	mod = fd.i_place;
 	i = fd.check_sum;
 	cmds = argc - 4;
-	check_sum_cases(&i, &cmds, mod);
+	check_sum_cases(&i, &cmds);
 	while (cmds--)
 	{
 		cmd = get_fullpath(argv[i], env);

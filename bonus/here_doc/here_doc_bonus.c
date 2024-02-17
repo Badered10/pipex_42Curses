@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:15:09 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/15 17:13:16 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/17 14:42:08 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	open_hidden_file(t_fd *doc_fd)
 		perror("here_doc failed to get input");
 		exit(EXIT_FAILURE);
 	}
-	doc_fd->check_in = 0;
 }
 
 static int	re_open_hidden_file(char *name)
@@ -67,7 +66,6 @@ void	here_doc(t_fd *fd, char **argv, int *i, int *cmds)
 	int		fd_hidden;
 	int		pipetimes;
 
-	(void)argv;
 	open_hidden_file(fd);
 	read_buf[0] = '\0';
 	while (1)

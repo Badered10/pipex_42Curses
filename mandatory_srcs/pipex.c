@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:45:53 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/15 16:59:00 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/16 18:28:47 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	main(int argc, char **argv, char **env)
 		return (print_err("Invaild number of args .", NULL), INV_ARGS);
 	fd = open_fds(argc, argv, env, MADANTORY);
 	skip_first(&fd, &i, NULL);
-	fd.i_place = i;
 	cmd_mod_check(fd, argc, argv, env);
 	i += 2;
 	child(fd, argv[i++], env, 0);

@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:45:53 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/17 15:02:48 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/17 19:02:00 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ int	main(int argc, char **argv, char **env)
 	while (cmds--)
 		child(fd, argv[i++], env, 0);
 	child(fd, argv[i], env, 1);
-	while (!waitpid(-1, NULL, 0))
+	while (waitpid(-1, NULL, 0) != -1)
 		;
 	return (return_value(fd, argc, argv, env));
 }
 
 /*
-	for this project the the main key of succeed is execve()
+	for this project the main key of succeed is execve()
 	it needs 3 arguments , fullpath of executable file (cmd)
 	and the cmd plus its args(double char pointer), and the
 	last argument of this func is environment pointer .

@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:06:37 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/17 15:03:40 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/17 19:27:10 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,12 @@ void	check_cmds(t_fd fd, int argc, char **argv, char **env)
 	while (cmds--)
 	{
 		cmd = get_fullpath(argv[i], env);
-		if (access(cmd, F_OK))
+		fprintf(stderr,"%s\n",cmd);
+		if (*argv[i] != '\0' && *argv[i] == '/' && access(cmd, F_OK))
+			print_err("pipex: no such file or directory:", argv[i]);
+		else if (*argv[i] != '\0' &&  access(cmd, F_OK))
 			print_err("pipex: command not found: ", argv[i]);
-		else if (access(cmd, X_OK))
+		else if (*argv[i] != '\0' && access(cmd, X_OK))
 			print_err("pipex: permission denied: ", argv[i]);
 		free(cmd);
 		i++;

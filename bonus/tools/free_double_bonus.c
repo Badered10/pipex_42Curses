@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:02:29 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/17 15:04:27 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/17 16:55:58 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	free_double(char **ptr)
 	int	i;
 
 	i = 0;
-	if (!ptr || !*ptr)
+	if (!ptr)
 		return ;
 	while (ptr[i])
 	{

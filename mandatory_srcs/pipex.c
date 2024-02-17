@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/08 09:45:53 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/16 18:28:47 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/17 18:53:45 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ int	main(int argc, char **argv, char **env)
 	otherways if fd false open a tmp file to pass its empty content 
 	to hundle such cases like command cat taht need input or will hang.
 	
+	2.1 if hidden file created that mean there is invild infile
+	so i msut skip first cmd by increment index i by one and decincrement 
+	cmds by one .
+	
+	2.2 In skip first intilize i_place to i value.
+
 	3 ---> check cmds if they are right depending of mods cases,
 	print in stderr error if command not found and continue the process
 	

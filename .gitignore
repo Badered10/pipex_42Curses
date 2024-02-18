@@ -1,0 +1,8 @@
+#ignore DS_Store file
+.DS_Store 
+#ingore .vscode file
+.vscode
+#ignore all object files and archive files
+ *.[oa]
+#ignore extra files of vscode
+ .dSYM

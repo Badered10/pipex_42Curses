@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:14:07 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/17 15:04:42 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/18 10:44:22 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	call_execev(char **env, char *argv)
 	}
 	else
 		execve(founded_path, cmd, env);
-	perror("execve");
+	print_err("pipex: command not found: ", "cat");
 	exit(EXIT_FAILURE);
 }
 

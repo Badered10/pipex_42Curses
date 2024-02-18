@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:07:20 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/17 18:42:31 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/18 10:46:22 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ char	*get_fullpath(char *argv, char **env)
 	cmd = ft_split(argv, ' ');
 	if (!(access(*cmd, F_OK)))
 	{
-		if (*argv == '/' && !access(*cmd, X_OK))
+		if ((*argv == '/' || *argv == '.') && !access(*cmd, X_OK))
 			return (founded_cmd(argv, paths, cmd));
 	}
-	else if (*argv != '/')
+	else if (*argv != '/' && *argv != '.')
 	{
 		while (paths_num-- > 0 && !fullpath)
 			fullpath = add_slash_cmd(paths[i++], *cmd);

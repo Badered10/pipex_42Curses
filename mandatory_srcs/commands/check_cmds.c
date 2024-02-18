@@ -6,7 +6,7 @@
 /*   By: baouragh <baouragh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 16:06:37 by baouragh          #+#    #+#             */
-/*   Updated: 2024/02/17 14:54:29 by baouragh         ###   ########.fr       */
+/*   Updated: 2024/02/18 10:46:05 by baouragh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@
 	 case 4: infile false , outfile false --> sipk both ---> 4 <--> 3 + 1
 	 	(first and last).
 */
-
-static void	check_sum_cases(int *index, int *cmds)
+static void	check_sum_cases(int *index, int *cmds, int mod)
 {
 	if (*index == CHECK_ALL)
 	{
@@ -48,23 +47,35 @@ static void	check_sum_cases(int *index, int *cmds)
 		(*index) = 3;
 		(*cmds)--;
 	}
+	if (mod)
+	{
+		(*index)++;
+		(*cmds)--;
+	}
 }
 
 void	check_cmds(t_fd fd, int argc, char **argv, char **env)
 {
 	int		cmds;
 	char	*cmd;
+	int		doc_mod;
 	int		i;
 
+	doc_mod = fd.i_place;
 	i = fd.check_sum;
 	cmds = argc - 4;
-	check_sum_cases(&i, &cmds);
+	check_sum_cases(&i, &cmds, doc_mod);
 	while (cmds--)
 	{
 		cmd = get_fullpath(argv[i], env);
-		if (access(cmd, F_OK) && *argv[i] != '\0')
+		if (!cmd && *argv[i] == '.')
+			cmd = get_command(argv[i]);
+		if (*argv[i] != '\0' && (*argv[i] == '/' || *argv[i] == '.')
+			&& access(cmd, F_OK))
+			print_err("pipex: no such file or directory:", argv[i]);
+		else if (*argv[i] != '\0' && access(cmd, F_OK))
 			print_err("pipex: command not found: ", argv[i]);
-		else if (access(cmd, X_OK) && *argv[i] != '\0')
+		else if (*argv[i] != '\0' && access(cmd, X_OK))
 			print_err("pipex: permission denied: ", argv[i]);
 		free(cmd);
 		i++;
